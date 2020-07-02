@@ -6,7 +6,7 @@ from torchvision.transforms import ToTensor, ToPILImage
 from PIL import Image
 import utils
 import loss
-from model import Generator, Downsampler, LinearDownsampler, GeneratorWithSparseVector
+from model.model import Generator, Downsampler, LinearDownsampler, GeneratorWithSparseVector
 from skimage.metrics import peak_signal_noise_ratio as psnr 
 
 import argparse
@@ -76,8 +76,6 @@ if __name__ == "__main__":
     if use_cuda:
         net_input = Variable(net_input)
         net_input = net_input.cuda()
-        # noise = noise.cuda()
-        # net_input_saved = net_input_saved.cuda()
         lr = lr.cuda()
         model_G = model_G.cuda()
         model_D = model_D.cuda()
@@ -95,11 +93,10 @@ if __name__ == "__main__":
         optimizer_D.zero_grad()
         
         bicubic_hr = F.interpolate(lr, scale_factor=scale, mode='bicubic')
-
-        # loss = l1(out_lr, lr) + l1(out_hr, bicubic_hr)
+        
         loss = l1(out_lr, lr) + 0.8*ltloss(out_hr, bicubic_hr) 
-        # loss = l1(out_lr, lr)
         loss.backward()
+        
         optimizer_G.step()
         optimizer_D.step()
 
