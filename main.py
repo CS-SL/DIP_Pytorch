@@ -5,9 +5,7 @@ from torch.autograd import Variable
 from torch.optim.lr_scheduler import MultiStepLR
 import utils
 import loss
-from model.arc import Generator, Downsampler, LinearDownsampler, GeneratorWithSparseVector
-from model.rcan import RCAN, RCAN_T, RCAN_S
-from model.sft_generator import SFTGenerator
+from model.arc import Generator, Downsampler
 from skimage.metrics import peak_signal_noise_ratio as psnr 
 from skimage.metrics import structural_similarity as ssim
 
