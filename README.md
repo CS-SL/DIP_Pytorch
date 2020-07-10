@@ -1,7 +1,7 @@
 # DIP_Pytorch
-Deep Image Prior for Image SR
+Deep Image Prior for Image Super-Resolution
 
-## Results
+## Results (X4 SR)
 | Input | Output | Training
  | ----- | ------ | --------
  |<img src="./imgs/input.png" width="400"/> | <img src="./imgs/sr.png" width="400"/> |<img src="./imgs/0869.gif" width="400"/>
