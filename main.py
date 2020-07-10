@@ -17,8 +17,8 @@ import logging
 
 use_cuda = True
 scale = 4
-data_path = './Dataset/'
-dataset = 'Set5' 
+data_path = './LR/'
+dataset = 'Bicubic' 
 n_iters = 10001
 reg_noise_std = 0.5 #0.03 # standard deviation of added noise after each training set
 save_frequency = 100
@@ -29,8 +29,8 @@ if __name__ == "__main__":
     utils.logger_info('DIP-track', log_path='./log/Bicubic-std0.5-track.log')
     logger = logging.getLogger('DIP-track')
 
-    lr_path = os.path.join(data_path, dataset, 'LR_bicubic', 'X{}'.format(scale))
-    hr_path = os.path.join(data_path, dataset, 'HR')
+    lr_path = os.path.join(data_path, dataset)
+#     hr_path = os.path.join(data_path, dataset, 'HR')
     
     sr_path = result_path
     if not os.path.exists(sr_path):
@@ -60,13 +60,13 @@ if __name__ == "__main__":
         lr = utils.png2tensor(img)
         h, w = lr.shape[2:]
         net_input = utils.get_noise(3, h, w)
-        hr = utils.png2tensor(hr_path + '/' + img_name.split('x{}'.format(scale))[0] + ext, scale=scale, crop=True)
+#         hr = utils.png2tensor(hr_path + '/' + img_name.split('x{}'.format(scale))[0] + ext, scale=scale, crop=True)
 
         if use_cuda:
             net_input = Variable(net_input)
             net_input = net_input.cuda()
             lr = lr.cuda()
-            hr = hr.cuda()
+#             hr = hr.cuda()
 
         for iter in range(n_iters):
             out_hr = model_G(net_input)
@@ -86,13 +86,13 @@ if __name__ == "__main__":
 
             print('At step {:05d}, loss is {:.4f}'.format(iter, loss.data.cpu()))
 
-            psnr_SR = psnr(utils.tensor2np(out_hr), utils.tensor2np(hr))
-            ssim_SR = ssim(utils.tensor2np(out_hr), utils.tensor2np(hr), multichannel=True)
+#             psnr_SR = psnr(utils.tensor2np(out_hr), utils.tensor2np(hr))
+#             ssim_SR = ssim(utils.tensor2np(out_hr), utils.tensor2np(hr), multichannel=True)
 
-            psnr_LR = psnr(utils.tensor2np(out_lr), utils.tensor2np(lr))
-            ssim_LR = ssim(utils.tensor2np(out_lr), utils.tensor2np(lr), multichannel=True)
+#             psnr_LR = psnr(utils.tensor2np(out_lr), utils.tensor2np(lr))
+#             ssim_LR = ssim(utils.tensor2np(out_lr), utils.tensor2np(lr), multichannel=True)
             
-            logger.info("At step {:05d}, SR_psnr is {:.4f}, SR_ssim is {:.4f} || LR_psnr is {:.4f}, LR_ssim is {:.4f}".format(iter, psnr_SR, ssim_SR, psnr_LR, ssim_LR))
+#             logger.info("At step {:05d}, SR_psnr is {:.4f}, SR_ssim is {:.4f} || LR_psnr is {:.4f}, LR_ssim is {:.4f}".format(iter, psnr_SR, ssim_SR, psnr_LR, ssim_LR))
             
             if iter % save_frequency == 0:
                 sr_path = os.path.join(result_path, img_name.split('x{}'.format(scale))[0], 'SR/X{}'.format(scale))
