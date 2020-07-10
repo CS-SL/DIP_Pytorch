@@ -36,8 +36,8 @@ if __name__ == "__main__":
     if not os.path.exists(sr_path):
         os.makedirs(sr_path)
 
-    model_G = RCAN(scale=scale)
-    model_D = LinearDownsampler(scale=scale)
+    model_G = Generator(scale=scale)
+    model_D = Downsampler(scale=scale)
     
     if use_cuda:
         model_G = model_G.cuda()
