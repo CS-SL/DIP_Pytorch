@@ -17,8 +17,8 @@ import logging
 
 use_cuda = True
 scale = 4
-data_path = './LR/'
-dataset = 'Bicubic' 
+data_path = './Dataset/'
+dataset = 'Set5' 
 n_iters = 10001
 reg_noise_std = 0.5 #0.03 # standard deviation of added noise after each training set
 save_frequency = 100
@@ -26,8 +26,8 @@ result_path = './results/RCAN-SSL-Set14-std0.5'
 
 
 if __name__ == "__main__":
-    utils.logger_info('SelfSR-track', log_path='./log/Set14-RCAN-SSL-std0.5-track.log')
-    logger = logging.getLogger('SelfSR-track')
+    utils.logger_info('DIP-track', log_path='./log/Bicubic-std0.5-track.log')
+    logger = logging.getLogger('DIP-track')
 
     lr_path = os.path.join(data_path, dataset, 'LR_bicubic', 'X{}'.format(scale))
     hr_path = os.path.join(data_path, dataset, 'HR')
