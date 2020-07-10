@@ -17,8 +17,8 @@ import logging
 
 use_cuda = True
 scale = 4
-data_path = '/root/proj/SelfSR/dataset/'
-dataset = 'Set14' 
+data_path = './LR/'
+dataset = 'Bicubic' 
 n_iters = 10001
 reg_noise_std = 0.5 #0.03 # standard deviation of added noise after each training set
 save_frequency = 100
